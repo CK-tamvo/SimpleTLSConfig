@@ -39,7 +39,7 @@ variable "ec2_name" {
 variable "ec2_instance_type" {
   description = "Type of the EC2 instance"
   type        = string
-  default     = "t3.medium"
+  default     = "t2.medium"
 }
 
 variable "ec2_key_name" {

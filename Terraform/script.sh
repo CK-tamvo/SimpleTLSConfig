@@ -41,3 +41,6 @@ sudo apt-get update
 ###################################
 # Install PowerShell
 sudo apt-get install -y powershell
+
+### Install Nginx
+sudo apt install -y nginx

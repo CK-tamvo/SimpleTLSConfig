@@ -1,0 +1,37 @@
+vi openssl-san.cnf
+
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = req_ext
+prompt = no
+
+[req_distinguished_name]
+CN = <your-dns-name>
+
+[req_ext]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = <your-dns-name>
+
+
+Create the Private Key: First, create a private key for the certificate.
+
+openssl genpkey -algorithm RSA -out <your-dns-name>.key -pkeyopt rsa_keygen_bits:2048 
+
+Generate the Certificate Signing Request (CSR): Next, generate the CSR using the openssl-san.cnf configuration file.
+
+openssl req -new -key  <your-dns-name>.key -out  <your-dns-name>.csr -config openssl-san.cnf
+
+Generate the Self-Signed Certificate: Finally, generate a self-signed certificate using the CSR and the configuration file. Here, we're generating a certificate that is valid for 365 days.
+
+    openssl x509 -req -in <your-dns-name>.csr -signkey <your-dns-name>.key -out <your-dns-name>.crt -days 365 -extfile openssl-san.cnf -extensions req_ext
+
+
+After running these commands, you'll have three files:
+
+    <your-dns-name>.key: The private key.
+    <your-dns-name>.csr: The certificate signing request.
+    <your-dns-name>.crt: The self-signed certificate.
+
+    
